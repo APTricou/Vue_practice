@@ -34,6 +34,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import('../views/About.vue'),
   },
+  {
+    path: '/servicecalculator',
+    name: 'ServiceCalculator',
+    component: () => import('../views/ServiceCalculator'),
+  },
 ];
 
 const router = new VueRouter({

@@ -4,7 +4,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/clicker">Clicker</router-link> |
-      <router-link to="/todolist">Todo List</router-link>
+      <router-link to="/todolist">Todo List</router-link> |
+      <router-link to="/servicecalculator">Service Calc</router-link>
     </div>
     <router-view />
   </div>
@@ -21,6 +22,7 @@
 
 #nav {
   padding: 30px;
+  height: 4vh;
 }
 
 #nav a {
@@ -30,5 +32,9 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+router-view {
+  height: 92vh;
 }
 </style>
