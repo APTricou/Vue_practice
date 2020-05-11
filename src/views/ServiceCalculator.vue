@@ -17,11 +17,11 @@
         <div class="datainputs">
           <div class="d">
             <h3>record 1</h3>
-            <input v-model.number="BytesPerRecord1" type="number" step="1" />
+            <input v-model="BytesPerRecord1" type="text" />
           </div>
           <div class="d">
             <h3>record 2</h3>
-            <input v-model.number="BytesPerRecord2" type="number" step="1" />
+            <input v-model="BytesPerRecord2" type="text" />
           </div>
           <textarea placeholder="space for notes"></textarea>
         </div>
@@ -61,14 +61,14 @@
           <p>This assumes all writes are new and unique</p>
           <p>
             {{
-              formatDataNumber((BytesPerRecord1 * Writes * queries) / total) ||
+              formatDataNumber((BytesComputed1 * Writes * queries) / total) ||
                 0
             }}
             for record 1
           </p>
           <p>
             {{
-              formatDataNumber((BytesPerRecord2 * Writes * queries) / total) ||
+              formatDataNumber((BytesComputed2 * Writes * queries) / total) ||
                 0
             }}
             for record 2
@@ -89,25 +89,44 @@ export default {
       QPD: '0',
       Reads: 1,
       Writes: 1,
-      BytesPerRecord1: 10,
-      BytesPerRecord2: 10,
-    };
-  },
-  computed: {
-    queries() {
-      const suffixes = {
+      BytesPerRecord1: '10',
+      BytesPerRecord2: '10',
+      suffixes: {
         K: '000', // kilo
         M: '000000', // million
         B: '000000000', // billion
         T: '000000000000', //trillion
-      };
+      },
+      dataSuffixes: {
+        kb: '000',
+        mb: '000000',
+        gb: '000000000',
+        tb: '000000000000',
+      },
+    };
+  },
+  computed: {
+    queries() {
       return this.QPD.replace(
         /([a-z])/gi,
-        match => suffixes[match.toUpperCase()]
+        match => this.suffixes[match.toUpperCase()]
       );
     },
     total() {
       return this.Reads + this.Writes;
+    },
+    BytesComputed1() {
+      console.log(this.BytesPerRecord1)
+      return this.BytesPerRecord1.replace(
+        /([a-z]+)/gi,
+        match => this.dataSuffixes[match.toLowerCase()]
+      );
+    },
+    BytesComputed2() {
+      return this.BytesPerRecord2.replace(
+        /([a-z]+)/gi,
+        match => this.dataSuffixes[match.toLowerCase()]
+      );
     },
   },
   methods: {
@@ -209,8 +228,8 @@ textarea {
 }
 
 .d {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .results {
