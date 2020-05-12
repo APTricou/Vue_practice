@@ -61,14 +61,14 @@
           <p>This assumes all writes are new and unique</p>
           <p>
             {{
-              formatDataNumber((BytesComputed1 * Writes * queries) / total) ||
+              formatDataNumber((BytesComputed1 * Writes * queries * 365 * 10) / total) ||
                 0
             }}
             for record 1
           </p>
           <p>
             {{
-              formatDataNumber((BytesComputed2 * Writes * queries) / total) ||
+              formatDataNumber((BytesComputed2 * Writes * queries * 365 * 10) / total) ||
                 0
             }}
             for record 2
